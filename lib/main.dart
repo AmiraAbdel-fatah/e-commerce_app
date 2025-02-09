@@ -4,9 +4,11 @@ import 'package:e_commerce/featuers/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'data/di/di.dart';
 import 'featuers/auth/register/register_screen.dart';
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
