@@ -8,6 +8,8 @@ import 'package:e_commerce/domain/entities/RegisterResponseEntity.dart';
 import 'package:e_commerce/domain/repositories/data_sources/remote_data_source/auth_remote_data_source.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../models/LoginResponseDM.dart';
+
 @Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   ApiManager apiManager;
@@ -45,6 +47,37 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
     } catch (e) {
       return left(ServerError(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failures, LoginResponseDm>> login(
+      String email, String password) async {
+    // TODO: implement login
+    try {
+      final List<ConnectivityResult> connectivityResult =
+          await Connectivity().checkConnectivity();
+      if (connectivityResult.contains(ConnectivityResult.wifi) ||
+          connectivityResult.contains(ConnectivityResult.mobile)) {
+        var response =
+            await apiManager.postData(endPoint: EndPoints.signIn, body: {
+          "email": email,
+          "password": password,
+        });
+
+        var loginResponse = LoginResponseDm.fromJson(response.data);
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          return Right(loginResponse);
+        } else {
+          return Left(ServerError(errorMessage: loginResponse.message!));
+        }
+      } else {
+        // todo: no internet connection
+        return Left(NetworkError(
+            errorMessage: 'No Internet Connection, Please check Internet'));
+      }
+    } catch (e) {
+      return left(Failures(errorMessage: e.toString()));
     }
   }
 }
