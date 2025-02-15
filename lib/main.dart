@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/utils/app_routes.dart';
 import 'package:e_commerce/core/utils/app_theme.dart';
 import 'package:e_commerce/featuers/auth/login/login_screen.dart';
+import 'package:e_commerce/featuers/pages/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
             routes: {
               AppRoutes.loginRoute: (context) => LoginScreen(),
               AppRoutes.registerRoute: (context) => RegisterScreen(),
+              AppRoutes.homeRoute: (context) => HomeScreen()
             },
           );
         });

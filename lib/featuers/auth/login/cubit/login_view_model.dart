@@ -14,9 +14,9 @@ class LoginViewModel extends Cubit<LoginStates> {
   // todo: hold data - handel Logic
 
   TextEditingController passwordController =
-      TextEditingController(text: 'amira123');
+      TextEditingController(text: 'Amira456');
   TextEditingController emailController =
-      TextEditingController(text: 'amira235@gmail.com');
+      TextEditingController(text: 'amira921@gmail.com');
 
   var formKey = GlobalKey<FormState>();
 
