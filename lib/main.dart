@@ -2,15 +2,24 @@ import 'package:e_commerce/core/utils/app_routes.dart';
 import 'package:e_commerce/core/utils/app_theme.dart';
 import 'package:e_commerce/featuers/auth/login/login_screen.dart';
 import 'package:e_commerce/featuers/pages/home_screen/home_screen.dart';
+import 'package:e_commerce/featuers/pages/product_details/product_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'data/di/di.dart';
 import 'featuers/auth/register/register_screen.dart';
+import 'featuers/pages/home_screen/tabs/home_tab/cubit/home_tab_view_model.dart';
+import 'myObserver.dart';
 
 void main() {
   configureDependencies();
-  runApp(const MyApp());
+  Bloc.observer = MyBlocObserver();
+  runApp(
+    MultiBlocProvider(providers: [
+      BlocProvider<HomeTabViewModel>(create: (_) => getIt<HomeTabViewModel>()),
+    ], child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +41,8 @@ class MyApp extends StatelessWidget {
             routes: {
               AppRoutes.loginRoute: (context) => LoginScreen(),
               AppRoutes.registerRoute: (context) => RegisterScreen(),
-              AppRoutes.homeRoute: (context) => HomeScreen()
+              AppRoutes.homeRoute: (context) => HomeScreen(),
+              AppRoutes.productRoute: (context) => ProductDetailsScreen(),
             },
           );
         });

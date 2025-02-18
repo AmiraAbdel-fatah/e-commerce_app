@@ -45,6 +45,10 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_image_slideshow: ^0.1.6
   cached_network_image: ^3.4.1
+  auto_size_text: ^3.0.0
+  readmore: ^3.0.0
+  shared_preferences: ^2.5.2
+
 
 
 dev_dependencies:
