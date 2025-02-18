@@ -1,6 +1,5 @@
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
-import 'package:e_commerce/data/di/di.dart';
 import 'package:e_commerce/domain/entities/CategoryOrBrandsResponseEntity.dart';
 import 'package:e_commerce/featuers/pages/home_screen/tabs/home_tab/cubit/home_tab_view_model.dart';
 import 'package:flutter/material.dart';
@@ -12,68 +11,144 @@ import '../../../../widgets/category_brand_item.dart';
 import 'cubit/home_tab_state.dart';
 
 class HomeTab extends StatelessWidget {
-  HomeTabViewModel viewModel = getIt<HomeTabViewModel>();
+  //HomeTabViewModel viewModel = getIt<HomeTabViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 16.h,
-          ),
-          _buildAnnouncement(images: viewModel.images),
-          SizedBox(
-            height: 24.h,
-          ),
-          _lineBreak(name: 'Categories'),
-          BlocBuilder<HomeTabViewModel, HomeTabStates>(
-            bloc: viewModel..getAllCategories(),
-            builder: (context, state) {
-              if (state is CategoryLoadingState) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                );
-              } else if (state is CategoryErrorState) {
-                return Text(state.failures.errorMessage);
-              } else if (state is CategorySuccessState) {
-                return _buildCategoryBrandSection(
-                    list: state.responseEntity.data!);
+    return BlocBuilder<HomeTabViewModel, HomeTabStates>(
+        bloc: HomeTabViewModel.getInit(context)
+          ..getAllCategories()
+          ..getAllBrands(),
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 16.h,
+                ),
+                _buildAnnouncement(
+                    images: HomeTabViewModel.getInit(context).images),
+                SizedBox(
+                  height: 24.h,
+                ),
+                _lineBreak(name: 'Categories'),
+                SizedBox(
+                    height: 270.h,
+                    child: state is CategorySuccessState ||
+                            state is BrandSuccessState
+                        ? GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 5),
+                            itemBuilder: (context, index) {
+                              return CategoryBrandItem(
+                                item: HomeTabViewModel.getInit(context)
+                                    .categoriesList[index],
+                              );
+                            },
+                            itemCount: HomeTabViewModel.getInit(context)
+                                .categoriesList
+                                .length,
+                            scrollDirection: Axis.horizontal,
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          ))),
+                //child: _buildCategoryBrandSection(CategoryBrandItem())),
+                _lineBreak(name: 'Brands'),
+                SizedBox(
+                    height: 300.h,
+                    child: state is CategorySuccessState ||
+                            state is BrandSuccessState
+                        ? GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 5),
+                            itemBuilder: (context, index) {
+                              return CategoryBrandItem(
+                                item: HomeTabViewModel.getInit(context)
+                                    .brandsList[index],
+                              );
+                            },
+                            itemCount: HomeTabViewModel.getInit(context)
+                                .brandsList
+                                .length,
+                            scrollDirection: Axis.horizontal,
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          ))),
+              ],
+            ),
+          );
+        });
 
-                //Text(state.responseEntity.data!.length.toString());
-              }
-              return Container();
-            },
-          ),
-          //child: _buildCategoryBrandSection(CategoryBrandItem())),
-          _lineBreak(name: 'Brands'),
-          BlocBuilder<HomeTabViewModel, HomeTabStates>(
-            bloc: viewModel..getAllBrands(),
-            builder: (context, state) {
-              if (state is BrandLoadingState) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                );
-              } else if (state is BrandErrorState) {
-                return Text(state.failures.errorMessage);
-              } else if (state is BrandSuccessState) {
-                return _buildCategoryBrandSection(
-                    list: state.responseEntity.data!);
-
-                //Text(state.responseEntity.data!.length.toString());
-              }
-              return Container();
-            },
-          )
-        ],
-      ),
-    );
+    //   SingleChildScrollView(
+    //   child: Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       SizedBox(
+    //         height: 16.h,
+    //       ),
+    //       _buildAnnouncement(images: viewModel.images),
+    //       SizedBox(
+    //         height: 24.h,
+    //       ),
+    //       _lineBreak(name: 'Categories'),
+    //       BlocBuilder<HomeTabViewModel, HomeTabStates>(
+    //         bloc: viewModel..getAllCategories(),
+    //         builder: (context, state) {
+    //           if (state is CategoryLoadingState) {
+    //             return Center(
+    //               child: CircularProgressIndicator(
+    //                 color: AppColors.primaryColor,
+    //               ),
+    //             );
+    //           } else if (state is CategoryErrorState) {
+    //             return Text(state.failures.errorMessage);
+    //           } else if (state is CategorySuccessState) {
+    //             return _buildCategoryBrandSection(
+    //                 list: state.responseEntity.data!);
+    //
+    //             //Text(state.responseEntity.data!.length.toString());
+    //           }
+    //           return Container();
+    //         },
+    //       ),
+    //       //child: _buildCategoryBrandSection(CategoryBrandItem())),
+    //       _lineBreak(name: 'Brands'),
+    //       BlocBuilder<HomeTabViewModel, HomeTabStates>(
+    //         bloc: viewModel..getAllBrands(),
+    //         builder: (context, state) {
+    //           if (state is BrandLoadingState) {
+    //             return Center(
+    //               child: CircularProgressIndicator(
+    //                 color: AppColors.primaryColor,
+    //               ),
+    //             );
+    //           } else if (state is BrandErrorState) {
+    //             return Text(state.failures.errorMessage);
+    //           } else if (state is BrandSuccessState) {
+    //             return _buildCategoryBrandSection(
+    //                 list: state.responseEntity.data!);
+    //
+    //             //Text(state.responseEntity.data!.length.toString());
+    //           }
+    //           return Container();
+    //         },
+    //       )
+    //     ],
+    //   ),
+    // );
 
     // BlocBuilder<HomeTabViewModel, HomeTabStates>(
     //   bloc: viewModel..getAllCategories(),
