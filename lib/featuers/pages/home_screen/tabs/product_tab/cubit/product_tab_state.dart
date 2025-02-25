@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/errors/failures.dart';
+import 'package:e_commerce/domain/entities/AddToCartResponseEntity.dart';
 import 'package:e_commerce/domain/entities/ProductsResponseEntity.dart';
 
 abstract class ProductTabState {}
@@ -17,4 +18,20 @@ class ProductTabSuccessState extends ProductTabState {
   ProductsResponseEntity responseEntity;
 
   ProductTabSuccessState({required this.responseEntity});
+}
+
+class ProductTabChangeTotalPriceState extends ProductTabState {}
+
+class AddCartLoadingState extends ProductTabState {}
+
+class AddCartErrorState extends ProductTabState {
+  Failures failures;
+
+  AddCartErrorState({required this.failures});
+}
+
+class AddCartSuccessState extends ProductTabState {
+  AddToCartResponseEntity responseEntity;
+
+  AddCartSuccessState({required this.responseEntity});
 }
