@@ -8,9 +8,9 @@ class ToastMessage {
         msg: msg,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 3,
+        timeInSecForIosWeb: 5,
         backgroundColor: AppColors.redColor,
         textColor: AppColors.whiteColor,
-        fontSize: 20);
+        fontSize: 30);
   }
 }

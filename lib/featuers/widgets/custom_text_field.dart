@@ -1,8 +1,8 @@
 import 'package:e_commerce/core/utils/app_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../core/utils/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../core/utils/app_colors.dart';
 
 typedef MyValidator = String? Function(String?)?;
 
@@ -18,7 +18,9 @@ class CustomTextField extends StatelessWidget {
   Widget? suffixIcon;
   int? maxLines;
   bool obSecureText;
+  bool? readOnly;
   String? Function(String?)? validator;
+  Null Function()? onTap;
   TextEditingController? controller;
   TextInputType? keyboardType;
 
@@ -38,6 +40,8 @@ class CustomTextField extends StatelessWidget {
     this.filledColor,
     this.obSecureText = false,
     this.borderColor,
+    this.readOnly,
+    this.onTap,
   });
 
   @override

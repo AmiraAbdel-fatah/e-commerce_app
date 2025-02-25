@@ -1,6 +1,5 @@
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_routes.dart';
-import 'package:e_commerce/data/di/di.dart';
 import 'package:e_commerce/featuers/pages/home_screen/tabs/product_tab/cubit/product_tab_state.dart';
 import 'package:e_commerce/featuers/pages/home_screen/tabs/product_tab/cubit/product_tab_view_model.dart';
 import 'package:e_commerce/featuers/widgets/product_tab_item.dart';
@@ -9,12 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductTab extends StatelessWidget {
-  ProductTabViewModel viewModel = getIt<ProductTabViewModel>();
+  //ProductTabViewModel viewModel = getIt<ProductTabViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductTabViewModel, ProductTabState>(
-      bloc: viewModel..getAllProducts(),
+      bloc: ProductTabViewModel.get(context)..getAllProducts(),
       builder: (context, state) {
         if (state is ProductTabErrorState) {
           return Center(
@@ -40,11 +39,13 @@ class ProductTab extends StatelessWidget {
                         onTap: () {
                           // Todo: Navigate to product details
                           Navigator.pushNamed(context, AppRoutes.productRoute,
-                              arguments: state.responseEntity.data![index]);
+                              arguments: ProductTabViewModel.get(context)
+                                  .productsList[index]);
                         },
                         child: ProductTabItem(
-                          product: state.responseEntity.data![index],
-                        ),
+                            product: state.responseEntity.data![index]
+                            // product: ProductTabViewModel.get(context).productsList[index],
+                            ),
                         // or
 
                         //child: ProductTabItem(product: viewModel.productsList[index],),
@@ -61,6 +62,7 @@ class ProductTab extends StatelessWidget {
         }
         return Container();
       },
+
       // child:
       // SafeArea(
       //   child: Column(

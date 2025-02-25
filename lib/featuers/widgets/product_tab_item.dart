@@ -5,6 +5,9 @@ import 'package:e_commerce/domain/entities/ProductsResponseEntity.dart';
 import 'package:e_commerce/featuers/widgets/custom_txt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../pages/home_screen/tabs/product_tab/cubit/product_tab_view_model.dart';
 
 class ProductTabItem extends StatelessWidget {
   ProductEntity product;
@@ -109,6 +112,14 @@ class ProductTabItem extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         // Todo: add to cart
+                        print('added to cart success');
+                        ProductTabViewModel.get(context)
+                            .addToCart(product.id ?? '');
+                        Fluttertoast.showToast(
+                            msg: 'added to cart success',
+                            fontSize: 22,
+                            backgroundColor: AppColors.greenColor);
+                        //Navigator.of(context).pushReplacementNamed(AppRoutes.productRoute);
                       },
                       splashColor: AppColors.transparentColor,
                       child: Icon(

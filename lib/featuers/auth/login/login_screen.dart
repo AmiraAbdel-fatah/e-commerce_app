@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/cache/shared_preference_utils.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/core/utils/app_validator.dart';
@@ -47,6 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
               title: 'Success',
               posActionName: 'Ok',
               posAction: () {
+                //Todo: Save Token   (user)
+                SharedPreferenceUtils.saveData(
+                    key: 'token', value: state.responseEntity.token);
                 Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
               });
         }

@@ -15,15 +15,15 @@ class RegisterViewModel extends Cubit<RegisterStates> {
 
   //TextEditingController userNameController = TextEditingController(text: 'Amira');
   TextEditingController passwordController =
-      TextEditingController(text: 'Amira');
+      TextEditingController(text: 'Amira2603');
   TextEditingController emailController =
-      TextEditingController(text: 'amira921@gmail.com');
+      TextEditingController(text: 'amira643@gmail.com');
   TextEditingController fullNameController =
-      TextEditingController(text: 'Amira');
+      TextEditingController(text: 'Amira11');
   TextEditingController phoneController =
-      TextEditingController(text: '0123064821');
+      TextEditingController(text: '0123093221');
   TextEditingController rePasswordController =
-      TextEditingController(text: 'Amira456');
+      TextEditingController(text: 'Amira2603');
   var formKey = GlobalKey<FormState>();
 
   Future<void> register() async {

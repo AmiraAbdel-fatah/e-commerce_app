@@ -11,6 +11,8 @@ class AppStyles {
       fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.primaryDark);
   static TextStyle regular18White = GoogleFonts.poppins(
       fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.whiteColor);
+  static TextStyle regular18Primary = GoogleFonts.poppins(
+      fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.primaryColor);
   static TextStyle light16White = GoogleFonts.poppins(
       fontSize: 16, fontWeight: FontWeight.w300, color: AppColors.whiteColor);
   static TextStyle regular14SearchHint = GoogleFonts.poppins(
